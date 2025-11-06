@@ -1,11 +1,19 @@
-export default function SideNav() {
-  // Lazy import to avoid circular refs (optional)
-  const NavLinks = require('./nav-links').default;
+import NavLinks from "@/app/ui/dashboard/nav-links";
+import { GlobeIcon } from "@/app/ui/dashboard/icons";
 
+export default function SideNav() {
   return (
-    <nav className="flex h-full flex-col gap-4 bg-gray-100 p-4 dark:bg-zinc-900">
-      <h2 className="text-xl font-bold text-zinc-800 dark:text-zinc-100 mb-4">Acme</h2>
+    <aside className="h-full p-4">
+      {/* Blue banner with Acme logo */}
+      <div className="mb-4 h-20 md:h-52 rounded-2xl bg-blue-500 p-4 text-white flex items-end">
+        <div className="flex items-center gap-3">
+          <GlobeIcon className="w-8 h-8 text-white" />
+          <span className="text-3xl md:text-4xl font-serif">Acme</span>
+        </div>
+      </div>
+
+      {/* Links */}
       <NavLinks />
-    </nav>
+    </aside>
   );
 }

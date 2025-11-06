@@ -1,37 +1,40 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { HomeIcon, DocumentIcon, UsersIcon } from "@/app/ui/dashboard/icons";
 
 const links = [
-  { name: 'Home', href: '/dashboard' },
-  { name: 'Customers', href: '/dashboard/customers' },
-  { name: 'Invoices', href: '/dashboard/invoices' },
+  { name: "Home", href: "/dashboard", icon: HomeIcon },
+  { name: "Invoices", href: "/dashboard/invoices", icon: DocumentIcon },
+  { name: "Customers", href: "/dashboard/customers", icon: UsersIcon },
 ];
 
 export default function NavLinks() {
   const pathname = usePathname();
 
   return (
-    <>
+    <ul className="space-y-4">
       {links.map((link) => {
-        const isActive = pathname === link.href;
+        const LinkIcon = link.icon;
+        const active = pathname === link.href;
         return (
-          <Link
-            key={link.name}
-            href={link.href}
-            className={
-              `flex h-[48px] grow items-center justify-center gap-2 rounded-md ` +
-              `bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 ` +
-              `md:flex-none md:justify-start md:p-2 md:px-3 ` +
-              (isActive ? 'bg-sky-100 text-blue-600' : '')
-            }
-          >
-            <span className="w-6 text-center">•</span>
-            <p className="hidden md:block">{link.name}</p>
-          </Link>
+          <li key={link.name}>
+            <Link
+              href={link.href}
+              className={
+                "flex h-16 items-center gap-4 rounded-2xl border border-black/5 px-4 text-lg font-medium " +
+                (active
+                  ? "bg-sky-100 text-blue-600"
+                  : "bg-white text-zinc-900 hover:bg-zinc-50")
+              }
+            >
+              <LinkIcon className="w-7 h-7" />
+              <span>{link.name}</span>
+            </Link>
+          </li>
         );
       })}
-    </>
+    </ul>
   );
 }
