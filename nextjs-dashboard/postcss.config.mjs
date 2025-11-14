@@ -1,7 +1,7 @@
-const config = {
+// WDD430/postcss.config.js
+module.exports = {
   plugins: {
-    "@tailwindcss/postcss": {},
+    tailwindcss: {},
+    autoprefixer: {},
   },
 };
-
-export default config;

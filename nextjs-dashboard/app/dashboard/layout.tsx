@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from ".pnpm/react@19.2.0/node_modules/react";
 import SideNav from "@/app/ui/dashboard/sidenav";
 
 export default function Layout({ children }: { children: ReactNode }) {

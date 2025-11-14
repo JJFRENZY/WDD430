@@ -1,6 +1,12 @@
 // app/ui/dashboard/cards.tsx
-import { BanknotesIcon, ClockIcon, UserGroupIcon, InboxIcon } from "@heroicons/react/24/outline";
+import {
+  BanknotesIcon,
+  ClockIcon,
+  UserGroupIcon,
+  InboxIcon,
+} from "@heroicons/react/24/outline";
 import { lusitana } from "@/app/ui/fonts";
+import { fetchCardData } from "@/app/lib/data";
 
 const iconMap = {
   collected: BanknotesIcon,
@@ -25,7 +31,11 @@ export function Card({
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
       <div className="flex items-center justify-between">
-        <p className={`${lusitana.className} text-sm font-medium text-zinc-500`}>{title}</p>
+        <p
+          className={`${lusitana.className} text-sm font-medium text-zinc-500`}
+        >
+          {title}
+        </p>
         <span className="rounded-full bg-blue-50 p-2 text-blue-600 dark:bg-blue-900/30 dark:text-blue-300">
           <Icon className="h-5 w-5" />
         </span>
@@ -34,5 +44,28 @@ export function Card({
         {typeof value === "number" ? value.toLocaleString() : value}
       </p>
     </div>
+  );
+}
+
+// This is what your overview page imports as CardWrapper
+export default async function CardWrapper() {
+  const {
+    numberOfInvoices,
+    numberOfCustomers,
+    totalPaidInvoices,
+    totalPendingInvoices,
+  } = await fetchCardData();
+
+  return (
+    <>
+      <Card title="Collected" value={totalPaidInvoices} type="collected" />
+      <Card title="Pending" value={totalPendingInvoices} type="pending" />
+      <Card title="Total Invoices" value={numberOfInvoices} type="invoices" />
+      <Card
+        title="Total Customers"
+        value={numberOfCustomers}
+        type="customers"
+      />
+    </>
   );
 }
