@@ -3,13 +3,34 @@ import Form from '@/app/ui/invoices/edit-form';
 import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
 import { fetchInvoiceById, fetchCustomers } from '@/app/lib/data';
 
-export default async function Page(props: { params: Promise<{ id: string }> }) {
-  const { id } = await props.params;
+export default async function Page({ params }: { params: { id: string } }) {
+  const { id } = params;
 
   const [invoice, customers] = await Promise.all([
     fetchInvoiceById(id),
     fetchCustomers(),
   ]);
+
+  // Handle "invoice not found" (TS also stops complaining here)
+  if (!invoice) {
+    return (
+      <main>
+        <Breadcrumbs
+          breadcrumbs={[
+            { label: 'Invoices', href: '/dashboard/invoices' },
+            {
+              label: 'Edit Invoice',
+              href: `/dashboard/invoices/${id}/edit`,
+              active: true,
+            },
+          ]}
+        />
+        <p className="mt-4 text-sm text-red-600">
+          Invoice not found.
+        </p>
+      </main>
+    );
+  }
 
   return (
     <main>

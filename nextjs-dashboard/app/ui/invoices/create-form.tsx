@@ -1,8 +1,8 @@
 // app/ui/invoices/create-form.tsx
 'use client';
 
-import type { CustomerField } from '@/app/lib/definitions';
-import { createInvoice } from '@/app/lib/actions';
+import type { CustomerField } from '../../lib/definitions';
+import { createInvoice } from '../../lib/actions';
 
 type Props = {
   customers: CustomerField[];

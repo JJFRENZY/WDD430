@@ -1,8 +1,8 @@
 // app/ui/invoices/edit-form.tsx
 'use client';
 
-import type { CustomerField, InvoiceForm } from '@/app/lib/definitions';
-import { updateInvoice } from '@/app/lib/actions';
+import type { CustomerField, InvoiceForm } from '../../lib/definitions';
+import { updateInvoice } from '../../lib/actions';
 
 type Props = {
   invoice: InvoiceForm;

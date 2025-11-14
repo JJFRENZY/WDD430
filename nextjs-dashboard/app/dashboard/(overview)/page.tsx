@@ -1,5 +1,5 @@
 // app/dashboard/(overview)/page.tsx
-import { Suspense } from ".pnpm/react@19.2.0/node_modules/react";
+import { Suspense } from "react";
 import { lusitana } from "@/app/ui/fonts";
 import CardWrapper from "@/app/ui/dashboard/cards";
 import RevenueChart from "@/app/ui/dashboard/revenue-chart";

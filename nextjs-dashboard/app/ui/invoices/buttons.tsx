@@ -4,10 +4,10 @@
 import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
-// IMPORTANT: Only import deleteInvoice,
-// because create/update actions are not used in this file.
-import { deleteInvoice } from '@/app/lib/actions';
+// ✅ Use a relative path instead of "@/app/lib/actions"
+import { deleteInvoice } from '../../lib/actions';
 
+// Create button
 export function CreateInvoice() {
   return (
     <Link
@@ -20,6 +20,7 @@ export function CreateInvoice() {
   );
 }
 
+// Update invoice button
 export function UpdateInvoice({ id }: { id: string }) {
   return (
     <Link
@@ -31,6 +32,7 @@ export function UpdateInvoice({ id }: { id: string }) {
   );
 }
 
+// Delete invoice button
 export function DeleteInvoice({ id }: { id: string }) {
   const deleteInvoiceWithId = deleteInvoice.bind(null, id);
 

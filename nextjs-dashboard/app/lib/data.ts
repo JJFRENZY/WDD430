@@ -7,7 +7,7 @@ import {
   Invoice,
   InvoiceForm,
   InvoicesTable,
-} from '@/app/lib/definitions';
+} from './definitions';
 
 export const ITEMS_PER_PAGE = 6;
 
@@ -166,7 +166,6 @@ export async function fetchCustomers(): Promise<CustomerField[]> {
   return customers.map((c) => ({ id: c.id, name: c.name }));
 }
 
-// Optional: if your customers page uses these later
 export async function fetchFilteredCustomers(
   query: string,
   currentPage: number,
