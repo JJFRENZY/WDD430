@@ -11,7 +11,6 @@ export default async function Page({ params }: { params: { id: string } }) {
     fetchCustomers(),
   ]);
 
-  // Handle "invoice not found" (TS also stops complaining here)
   if (!invoice) {
     return (
       <main>
@@ -25,9 +24,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             },
           ]}
         />
-        <p className="mt-4 text-sm text-red-600">
-          Invoice not found.
-        </p>
+        <p className="mt-4 text-sm text-red-600">Invoice not found.</p>
       </main>
     );
   }

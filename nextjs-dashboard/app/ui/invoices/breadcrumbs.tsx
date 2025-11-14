@@ -1,8 +1,7 @@
 // app/ui/invoices/breadcrumbs.tsx
-
 import Link from "next/link";
 
-export type Breadcrumb = {
+export type BreadcrumbItem = {
   label: string;
   href: string;
   active?: boolean;
@@ -11,34 +10,29 @@ export type Breadcrumb = {
 export default function Breadcrumbs({
   breadcrumbs,
 }: {
-  breadcrumbs: Breadcrumb[];
+  breadcrumbs: BreadcrumbItem[];
 }) {
   return (
-    <nav aria-label="Breadcrumb" className="mb-4 text-sm">
-      <ol className="flex space-x-2 text-zinc-600 dark:text-zinc-300">
-        {breadcrumbs.map((crumb, index) => {
-          const isLast = index === breadcrumbs.length - 1;
+    <nav aria-label="Breadcrumb" className="mb-6">
+      <ol className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300">
+        {breadcrumbs.map((crumb, index) => (
+          <li key={index} className="flex items-center gap-2">
+            {crumb.active ? (
+              <span className="font-medium text-zinc-900 dark:text-zinc-100">
+                {crumb.label}
+              </span>
+            ) : (
+              <Link
+                href={crumb.href}
+                className="hover:underline text-blue-600 dark:text-blue-400"
+              >
+                {crumb.label}
+              </Link>
+            )}
 
-          return (
-            <li key={crumb.href} className="flex items-center">
-              {!isLast ? (
-                <Link
-                  href={crumb.href}
-                  className="hover:text-blue-600 hover:underline"
-                >
-                  {crumb.label}
-                </Link>
-              ) : (
-                <span className="font-semibold text-zinc-900 dark:text-zinc-100">
-                  {crumb.label}
-                </span>
-              )}
-
-              {/* separator except for last item */}
-              {!isLast && <span className="mx-2">/</span>}
-            </li>
-          );
-        })}
+            {index < breadcrumbs.length - 1 && <span>/</span>}
+          </li>
+        ))}
       </ol>
     </nav>
   );

@@ -1,4 +1,5 @@
-import type { ReactNode } from ".pnpm/react@19.2.0/node_modules/react";
+// app/dashboard/layout.tsx
+import type { ReactNode } from "react";
 import SideNav from "@/app/ui/dashboard/sidenav";
 
 export default function Layout({ children }: { children: ReactNode }) {
@@ -7,7 +8,9 @@ export default function Layout({ children }: { children: ReactNode }) {
       <div className="w-full flex-none md:w-64">
         <SideNav />
       </div>
-      <main className="grow p-6 md:overflow-y-auto md:p-12">{children}</main>
+      <main className="grow p-6 md:overflow-y-auto md:p-12">
+        {children}
+      </main>
     </div>
   );
 }
