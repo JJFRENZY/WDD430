@@ -1,8 +1,12 @@
 // app/dashboard/invoices/create/page.tsx
+import type { Metadata } from 'next';
 import Form from '@/app/ui/invoices/create-form';
 import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
-// If your data.ts has fetchCustomers in the starter, import it:
 import { fetchCustomers } from '@/app/lib/data';
+
+export const metadata: Metadata = {
+  title: 'Create Invoice',
+};
 
 export default async function Page() {
   const customers = await fetchCustomers();

@@ -1,16 +1,23 @@
-// app/dashboard/layout.tsx
-import type { ReactNode } from "react";
-import SideNav from "@/app/ui/dashboard/sidenav";
+// app/layout.tsx
+import './globals.css';
+import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
+import { inter } from '@/app/ui/fonts';
 
-export default function Layout({ children }: { children: ReactNode }) {
+export const metadata: Metadata = {
+  title: {
+    template: '%s | Acme Dashboard',
+    default: 'Acme Dashboard',
+  },
+  description:
+    'The official Next.js Learn Dashboard built with App Router.',
+  metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),
+};
+
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-      <div className="w-full flex-none md:w-64">
-        <SideNav />
-      </div>
-      <main className="grow p-6 md:overflow-y-auto md:p-12">
-        {children}
-      </main>
-    </div>
+    <html lang="en">
+      <body className={inter.className}>{children}</body>
+    </html>
   );
 }

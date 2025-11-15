@@ -1,17 +1,25 @@
 // app/ui/invoices/create-form.tsx
 'use client';
 
-import type { CustomerField } from '../../lib/definitions';
-import { createInvoice } from '../../lib/actions';
+import { useActionState } from 'react';
+import type { CustomerField } from '@/app/lib/definitions';
+import { createInvoice, type State } from '@/app/lib/actions';
 
 type Props = {
   customers: CustomerField[];
 };
 
+const initialState: State = {
+  message: null,
+  errors: {},
+};
+
 export default function CreateInvoiceForm({ customers }: Props) {
+  const [state, formAction] = useActionState(createInvoice, initialState);
+
   return (
     <form
-      action={createInvoice}
+      action={formAction}
       className="space-y-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
     >
       <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
@@ -29,16 +37,33 @@ export default function CreateInvoiceForm({ customers }: Props) {
         <select
           id="customerId"
           name="customerId"
-          required
+          defaultValue=""
+          aria-describedby="customerId-error"
           className="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm outline-none ring-0 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50"
         >
-          <option value="">Select a customer</option>
+          <option value="" disabled>
+            Select a customer
+          </option>
           {customers.map((customer) => (
             <option key={customer.id} value={customer.id}>
               {customer.name}
             </option>
           ))}
         </select>
+
+        <div
+          id="customerId-error"
+          aria-live="polite"
+          aria-atomic="true"
+          className="min-h-[1.25rem]"
+        >
+          {state.errors?.customerId &&
+            state.errors.customerId.map((error) => (
+              <p key={error} className="text-sm text-red-500">
+                {error}
+              </p>
+            ))}
+        </div>
       </div>
 
       {/* Amount */}
@@ -53,12 +78,26 @@ export default function CreateInvoiceForm({ customers }: Props) {
           id="amount"
           name="amount"
           type="number"
-          required
           min={0}
           step="0.01"
           placeholder="0.00"
+          aria-describedby="amount-error"
           className="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm outline-none ring-0 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50"
         />
+
+        <div
+          id="amount-error"
+          aria-live="polite"
+          aria-atomic="true"
+          className="min-h-[1.25rem]"
+        >
+          {state.errors?.amount &&
+            state.errors.amount.map((error) => (
+              <p key={error} className="text-sm text-red-500">
+                {error}
+              </p>
+            ))}
+        </div>
       </div>
 
       {/* Status */}
@@ -73,6 +112,7 @@ export default function CreateInvoiceForm({ customers }: Props) {
               name="status"
               value="pending"
               defaultChecked
+              aria-describedby="status-error"
               className="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-zinc-600"
             />
             <span>Pending</span>
@@ -82,12 +122,34 @@ export default function CreateInvoiceForm({ customers }: Props) {
               type="radio"
               name="status"
               value="paid"
+              aria-describedby="status-error"
               className="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-zinc-600"
             />
             <span>Paid</span>
           </label>
         </div>
+
+        <div
+          id="status-error"
+          aria-live="polite"
+          aria-atomic="true"
+          className="min-h-[1.25rem]"
+        >
+          {state.errors?.status &&
+            state.errors.status.map((error) => (
+              <p key={error} className="text-sm text-red-500">
+                {error}
+              </p>
+            ))}
+        </div>
       </fieldset>
+
+      {/* Form-level error message */}
+      {state.message && (
+        <p className="text-sm text-red-600" aria-live="polite">
+          {state.message}
+        </p>
+      )}
 
       {/* Buttons */}
       <div className="flex justify-end gap-2">
