@@ -1,8 +1,10 @@
-/* Global styles */
-html,
-body {
+/* app/globals.css */
+
+/* Basic resets */
+html, body {
   margin: 0;
   padding: 0;
+  font-family: sans-serif;
 }
 
-/* any custom global styles below */
+/* You can add any other global CSS you want */
