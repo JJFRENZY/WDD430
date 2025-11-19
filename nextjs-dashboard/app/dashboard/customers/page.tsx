@@ -3,8 +3,11 @@ import type { Metadata } from 'next';
 import { lusitana } from '@/app/ui/fonts';
 import Search from '@/app/ui/search';
 import CustomersTable from '@/app/ui/customers/table';
-import Pagination from '@/app/ui/pagination';
-import { fetchCustomersPages } from '@/app/lib/data';
+import Pagination from '@/app/ui/invoices/pagination';
+import {
+  fetchCustomersPages,
+  fetchFilteredCustomers,
+} from '@/app/lib/data';
 
 export const metadata: Metadata = {
   title: 'Customers',
@@ -20,7 +23,9 @@ type PageProps = {
 export default async function Page({ searchParams }: PageProps) {
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
+
   const totalPages = await fetchCustomersPages(query);
+  const customers = await fetchFilteredCustomers(query, currentPage);
 
   return (
     <main>
@@ -33,7 +38,7 @@ export default async function Page({ searchParams }: PageProps) {
       </div>
 
       {/* Table */}
-      <CustomersTable query={query} currentPage={currentPage} />
+      <CustomersTable customers={customers} />
 
       {/* Pagination */}
       <Pagination totalPages={totalPages} />

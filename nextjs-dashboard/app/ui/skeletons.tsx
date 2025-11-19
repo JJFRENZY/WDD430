@@ -1,6 +1,6 @@
 // app/ui/skeletons.tsx
 
-import React from "react"; // or you can delete this line if you want – JSX will still work
+import React from "react";
 
 // Generic gray pulsing block
 function SkeletonBlock({ className = "" }: { className?: string }) {
@@ -12,8 +12,7 @@ function SkeletonBlock({ className = "" }: { className?: string }) {
 }
 
 /**
- * Used by /app/dashboard/loading.tsx
- * Shows the whole dashboard "shell" while data loads.
+ * Default skeleton shown while the entire dashboard route loads.
  */
 export default function DashboardSkeleton() {
   return (
@@ -36,7 +35,7 @@ export default function DashboardSkeleton() {
 }
 
 /**
- * Skeleton for the four statistic cards row.
+ * Skeleton for the four statistic cards shown on the dashboard.
  */
 export function CardsSkeleton() {
   return (
@@ -95,6 +94,43 @@ export function LatestInvoicesSkeleton() {
               </div>
             </div>
             <SkeletonBlock className="h-4 w-16" />
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/**
+ * Skeleton for the invoices table on /dashboard/invoices.
+ */
+export function InvoicesTableSkeleton() {
+  return (
+    <section className="mt-6 rounded-xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="space-y-3">
+        {/* Header skeleton */}
+        <div className="flex items-center justify-between gap-4">
+          <SkeletonBlock className="h-4 w-24" />
+          <SkeletonBlock className="h-4 w-20" />
+          <SkeletonBlock className="h-4 w-16" />
+          <SkeletonBlock className="h-4 w-20" />
+          <SkeletonBlock className="h-4 w-12" />
+        </div>
+
+        {/* Table row skeletons */}
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div
+            key={i}
+            className="flex items-center justify-between gap-4 border-t border-zinc-200 pt-3 dark:border-zinc-800"
+          >
+            <div className="flex items-center gap-3">
+              <SkeletonBlock className="h-8 w-8 rounded-full" />
+              <SkeletonBlock className="h-4 w-32" />
+            </div>
+            <SkeletonBlock className="h-4 w-32" />
+            <SkeletonBlock className="h-4 w-16" />
+            <SkeletonBlock className="h-4 w-20" />
+            <SkeletonBlock className="h-4 w-12" />
           </div>
         ))}
       </div>

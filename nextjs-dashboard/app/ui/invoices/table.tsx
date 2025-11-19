@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import { DeleteInvoice, UpdateInvoice } from '@/app/ui/invoices/buttons';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
-import type { Invoice } from '@/app/lib/definitions';
+import type { InvoicesTable } from '@/app/lib/definitions';
 
 export default function Table({
   invoices,
 }: {
-  invoices: Invoice[];
+  invoices: InvoicesTable[];
 }) {
   return (
     <div className="mt-6 flow-root">
@@ -55,18 +55,23 @@ export default function Table({
                         <p>{invoice.name}</p>
                       </div>
                     </td>
+
                     <td className="whitespace-nowrap px-3 py-3">
                       {invoice.email}
                     </td>
+
                     <td className="whitespace-nowrap px-3 py-3">
                       {formatCurrency(invoice.amount)}
                     </td>
+
                     <td className="whitespace-nowrap px-3 py-3">
                       {formatDateToLocal(invoice.date)}
                     </td>
+
                     <td className="whitespace-nowrap px-3 py-3">
                       {invoice.status}
                     </td>
+
                     <td className="whitespace-nowrap py-3 pl-6 pr-3">
                       <div className="flex justify-end gap-3">
                         <UpdateInvoice id={invoice.id} />
@@ -76,6 +81,7 @@ export default function Table({
                   </tr>
                 ))}
               </tbody>
+
             </table>
           </div>
         </div>
