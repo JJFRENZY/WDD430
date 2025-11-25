@@ -1,8 +1,12 @@
 // proxy.ts
-import NextAuth from 'next-auth';
-import { authConfig } from './auth.config';
+// Minimal no-op proxy for W03. Runs on every request and just continues.
 
-export default NextAuth(authConfig).auth;
+import { NextResponse } from 'next/server';
+
+export default function proxy() {
+  // Just let the request continue without changes
+  return NextResponse.next();
+}
 
 export const config = {
   // Run proxy on *most* routes, skipping static assets & API

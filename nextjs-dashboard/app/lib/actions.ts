@@ -7,7 +7,6 @@ import { redirect } from 'next/navigation';
 import { sql } from '@vercel/postgres';
 import type { InvoiceForm } from '@/app/lib/definitions';
 import { signIn } from '@/auth';
-import { AuthError } from 'next-auth';
 
 // ---------- Zod Schemas ----------
 
@@ -145,16 +144,11 @@ export async function authenticate(
   formData: FormData,
 ) {
   try {
+    // Our stubbed signIn from auth.ts accepts any args and does nothing.
     await signIn('credentials', formData);
+    return undefined;
   } catch (error) {
-    if (error instanceof AuthError) {
-      switch (error.type) {
-        case 'CredentialsSignin':
-          return 'Invalid credentials.';
-        default:
-          return 'Something went wrong.';
-      }
-    }
-    throw error;
+    console.error('Authentication error:', error);
+    return 'Something went wrong.';
   }
 }

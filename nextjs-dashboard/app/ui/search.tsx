@@ -1,40 +1,23 @@
 // app/ui/search.tsx
-"use client";
+'use client';
 
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useDebouncedCallback } from ".pnpm/use-debounce@10.0.6_react@19.2.0/node_modules/use-debounce";
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
-export default function Search({ placeholder }: { placeholder: string }) {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
+type SearchProps = {
+  placeholder: string;
+};
 
-  const handleSearch = useDebouncedCallback((term: string) => {
-    const params = new URLSearchParams(searchParams);
-
-    // Whenever we change the search, reset to page 1
-    params.set("page", "1");
-
-    if (term) {
-      params.set("query", term);
-    } else {
-      params.delete("query");
-    }
-
-    replace(`${pathname}?${params.toString()}`);
-  }, 300);
-
+export default function Search({ placeholder }: SearchProps) {
   return (
     <div className="relative flex flex-1 shrink-0">
       <label htmlFor="search" className="sr-only">
-        Search
+        {placeholder}
       </label>
       <input
         id="search"
+        type="search"
+        name="search"
         placeholder={placeholder}
-        defaultValue={searchParams.get("query")?.toString() ?? ""}
-        onChange={(e) => handleSearch(e.target.value)}
         className="peer block w-full rounded-md border border-gray-200
                    py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
       />

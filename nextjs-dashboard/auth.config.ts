@@ -1,12 +1,13 @@
 // auth.config.ts
-import type { NextAuthConfig } from 'next-auth';
+// Simplified auth config for W03.
+// We are not using next-auth in this assignment, so this is just a plain object.
 
 export const authConfig = {
   pages: {
     signIn: '/login',
   },
   callbacks: {
-    authorized({ auth, request: { nextUrl } }) {
+    authorized({ auth, request: { nextUrl } }: any) {
       const isLoggedIn = !!auth?.user;
       const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
 
@@ -26,6 +27,4 @@ export const authConfig = {
       return true;
     },
   },
-  // ✅ Required by NextAuthConfig, even if you override in auth.ts
-  providers: [],
-} satisfies NextAuthConfig;
+};
